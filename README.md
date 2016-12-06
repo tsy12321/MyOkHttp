@@ -470,7 +470,7 @@ void resumeTasks()
  * 添加下载任务
  * @param task Task
  */
-void addTask(Task task)
+DownloadTask addTask(Task task)
 ```
 
 #### 3. 开始任务
@@ -549,6 +549,17 @@ void removeListener(DownloadTaskListener downloadTaskListener)
  * @return
  */
 String genTaskId()
+```
+
+#### 11. 获取当前任务的下载任务信息
+
+```java
+/**
+ * 获取当前任务的下载任务信息
+ * @param taskId 任务id
+ * @return
+ */
+DownloadTask getDownloadTask(String taskId)
 ```
 
 ### 4.4 下载任务状态说明

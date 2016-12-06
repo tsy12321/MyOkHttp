@@ -1,5 +1,6 @@
 package com.tsy.sample.myokhttp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * myokhttp 请求代码 仅供参考 不可运行
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_download_mgr:
+                startActivity(new Intent(this, DownloadMgrActivity.class));
                 break;
         }
     }

@@ -200,7 +200,7 @@ public abstract class AbstractDownloadMgr {
      * 添加下载任务
      * @param task Task
      */
-    public void addTask(Task task) {
+    public DownloadTask addTask(Task task) {
         if(DEBUG) {
             Log.i(TAG, "addTask " + task.toString());
         }
@@ -212,7 +212,7 @@ public abstract class AbstractDownloadMgr {
             if(DEBUG) {
                 Log.w(TAG, "addTask contain " + task.getTaskId());
             }
-            return ;
+            return null;
         }
 
         DownloadTask downloadTask = new DownloadTask();
@@ -231,6 +231,8 @@ public abstract class AbstractDownloadMgr {
         } else if(task.getDefaultStatus() == DEFAULT_TASK_STATUS_PAUSE) {
             pauseTask(task.getTaskId());
         }
+
+        return downloadTask;
     }
 
     /**
@@ -354,6 +356,15 @@ public abstract class AbstractDownloadMgr {
         SimpleDateFormat dateformat=new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);
         String datetime = dateformat.format(new Date());
         return datetime + getRandNum() + getRandNum() + getRandNum();
+    }
+
+    /**
+     * 获取当前任务的下载任务信息
+     * @param taskId 任务id
+     * @return
+     */
+    public DownloadTask getDownloadTask(String taskId) {
+        return mDownloadTaskPool.get(taskId);
     }
 
     public void setDebug(boolean debug) {
