@@ -5,11 +5,11 @@
 
 > 对Okhttp3进行二次封装,对外提供了POST请求、GET请求、PATCH请求、PUT请求、DELETE请求、上传文件、下载文件、取消请求、Raw/Json/Gson返回、后台下载管理等功能.
 
-## 0 重要版本更新
+## 重要版本更新
 
-|日期|版本号|更新内容|
-|---|---|---|
-|2016-12-06|1.0.0|POST请求、GET请求、PATCH请求、PUT请求、DELETE请求、上传文件、下载文件、取消请求、Raw/Json/Gson返回、后台下载管理等功能|
+|版本号|更新内容|
+|---|---|
+|1.0.0|POST请求、GET请求、PATCH请求、PUT请求、DELETE请求、上传文件、下载文件、取消请求、Raw/Json/Gson返回、后台下载管理等功能|
 
 ## 文章推荐
 
@@ -640,6 +640,13 @@ public interface DownloadTaskListener {
     void onFailure(String taskId, String error_msg);
 }
 ```
+
+## About Me
+简书地址：http://www.jianshu.com/users/21716b19302d/latest_articles
+
+微信公众号
+
+![我的公众号](https://github.com/tsy12321/PayAndroid/blob/master/wxmp_avatar.jpg)
 
 License
 -------
