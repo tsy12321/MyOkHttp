@@ -1,7 +1,6 @@
 # MyOkhttp Wiki
 
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![](https://jitpack.io/v/tsy12321/MyOkHttp.svg)](https://jitpack.io/#tsy12321/MyOkHttp)
 
 > 对Okhttp3进行二次封装,对外提供了POST请求、GET请求、PATCH请求、PUT请求、DELETE请求、上传文件、下载文件、取消请求、Raw/Json/Gson返回、后台下载管理等功能.
 
@@ -25,8 +24,7 @@
 allprojects {
     repositories {
         jcenter()
-        // JitPack仓库地址
-        maven { url "https://jitpack.io" }
+        maven { url "https://dl.bintray.com/tangsiyuan/maven" }
     }
 }
 ```
@@ -34,7 +32,7 @@ allprojects {
 ### 2.在app目录下的build.gradle中添加依赖
 
 ```gradle
-    compile 'com.github.tsy12321:MyOkHttp:1.0.0'
+    compile 'com.tsy:myokhttp:1.0.0'
 ```
 
 ## 1 总体简介
