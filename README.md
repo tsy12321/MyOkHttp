@@ -18,18 +18,8 @@
 1. [https://github.com/ZhaoKaiQiang/OkHttpPlus](https://github.com/ZhaoKaiQiang/OkHttpPlus)
 
 ## 如何添加
-### 1.在Project的build.gradle 中添加仓库地址
 
-``` gradle
-allprojects {
-    repositories {
-        jcenter()
-        maven { url "https://dl.bintray.com/tangsiyuan/maven" }
-    }
-}
-```
-
-### 2.在app目录下的build.gradle中添加依赖
+### 在app目录下的build.gradle中添加依赖
 
 ```gradle
     compile 'com.tsy:myokhttp:1.0.0'
