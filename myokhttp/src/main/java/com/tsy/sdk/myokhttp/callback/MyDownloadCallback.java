@@ -40,7 +40,9 @@ public class MyDownloadCallback implements Callback {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mDownloadResponseHandler.onFailure(e.toString());
+                if(mDownloadResponseHandler != null) {
+                    mDownloadResponseHandler.onFailure(e.toString());
+                }
             }
         });
     }
@@ -55,7 +57,9 @@ public class MyDownloadCallback implements Callback {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mDownloadResponseHandler.onStart(response.body().contentLength());
+                        if(mDownloadResponseHandler != null) {
+                            mDownloadResponseHandler.onStart(response.body().contentLength());
+                        }
                     }
                 });
 
@@ -71,7 +75,9 @@ public class MyDownloadCallback implements Callback {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mDownloadResponseHandler.onFinish(file);
+                            if(mDownloadResponseHandler != null) {
+                                mDownloadResponseHandler.onFinish(file);
+                            }
                         }
                     });
                 } catch (final Exception e) {
@@ -79,7 +85,9 @@ public class MyDownloadCallback implements Callback {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                mDownloadResponseHandler.onCancel();
+                                if(mDownloadResponseHandler != null) {
+                                    mDownloadResponseHandler.onCancel();
+                                }
                             }
                         });
                     } else {
@@ -87,7 +95,9 @@ public class MyDownloadCallback implements Callback {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                mDownloadResponseHandler.onFailure("onResponse saveFile fail." + e.toString());
+                                if(mDownloadResponseHandler != null) {
+                                    mDownloadResponseHandler.onFailure("onResponse saveFile fail." + e.toString());
+                                }
                             }
                         });
                     }
@@ -98,7 +108,9 @@ public class MyDownloadCallback implements Callback {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mDownloadResponseHandler.onFailure("fail status=" + response.code());
+                        if(mDownloadResponseHandler != null) {
+                            mDownloadResponseHandler.onFailure("fail status=" + response.code());
+                        }
                     }
                 });
             }
@@ -135,7 +147,9 @@ public class MyDownloadCallback implements Callback {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mDownloadResponseHandler.onProgress(final_complete_len, total_len);
+                        if(mDownloadResponseHandler != null) {
+                            mDownloadResponseHandler.onProgress(final_complete_len, total_len);
+                        }
                     }
                 });
             }
