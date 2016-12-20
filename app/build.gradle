@@ -31,5 +31,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
 //    compile project(":myokhttp")
-    compile 'com.tsy:myokhttp:1.0.0'
+    compile 'com.tsy:myokhttp:1.0.1'
 }
