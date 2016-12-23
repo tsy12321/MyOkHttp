@@ -13,6 +13,7 @@ import com.tsy.sdk.myokhttp.response.GsonResponseHandler;
 import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 import com.tsy.sdk.myokhttp.response.RawResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -105,7 +106,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .enqueue(new JsonResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, JSONObject response) {
-                        Log.d(TAG, "doPost onSuccess:" + response);
+                        Log.d(TAG, "doPost onSuccess JSONObject:" + response);
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, JSONArray response) {
+                        Log.d(TAG, "doPost onSuccess JSONArray:" + response);
                     }
 
                     @Override

@@ -5,11 +5,9 @@
 
 > 对Okhttp3进行二次封装,对外提供了POST请求、GET请求、PATCH请求、PUT请求、DELETE请求、上传文件、下载文件、取消请求、Raw/Json/Gson返回、后台下载管理等功能.
 
-## 重要版本更新
+## 版本更新记录
 
-|版本号|更新内容|
-|---|---|
-|1.0.0|POST请求、GET请求、PATCH请求、PUT请求、DELETE请求、上传文件、下载文件、取消请求、Raw/Json/Gson返回、后台下载管理等功能|
+[版本更新记录](https://github.com/tsy12321/MyOkHttp/releases)
 
 ## 文章推荐
 
@@ -23,7 +21,7 @@
 ### 在app目录下的build.gradle中添加依赖
 
 ```gradle
-    compile 'com.tsy:myokhttp:1.0.1'
+    compile 'com.tsy:myokhttp:1.1.0'
 ```
 
 ## 1 总体简介
@@ -88,7 +86,12 @@ mMyOkhttp.post()
         .enqueue(new JsonResponseHandler() {
             @Override
             public void onSuccess(int statusCode, JSONObject response) {
-                Log.d(TAG, "doPost onSuccess:" + response);
+                Log.d(TAG, "doPost onSuccess JSONObject:" + response);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, JSONArray response) {
+                Log.d(TAG, "doPost onSuccess JSONArray:" + response);
             }
 
             @Override

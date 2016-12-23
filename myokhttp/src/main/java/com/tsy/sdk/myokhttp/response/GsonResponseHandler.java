@@ -1,9 +1,15 @@
 package com.tsy.sdk.myokhttp.response;
 
+import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
+import com.tsy.sdk.myokhttp.util.LogUtils;
 
+import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Gson类型的回调接口
@@ -11,7 +17,7 @@ import java.lang.reflect.Type;
  */
 public abstract class GsonResponseHandler<T> implements IResponseHandler {
 
-    Type mType;
+    private Type mType;
 
     public GsonResponseHandler() {
         Type myclass = getClass().getGenericSuperclass();    //反射获取带泛型的class
@@ -22,8 +28,34 @@ public abstract class GsonResponseHandler<T> implements IResponseHandler {
         mType = $Gson$Types.canonicalize(parameter.getActualTypeArguments()[0]);  //将泛型转为type
     }
 
-    public final Type getType() {
+    private Type getType() {
         return mType;
+    }
+
+    @Override
+    public final void onSuccess(Response response) {
+        ResponseBody responseBody = response.body();
+        String responseBodyStr = "";
+
+        try {
+            responseBodyStr = responseBody.string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogUtils.e("onResponse fail read response body");
+            onFailure(response.code(), "fail read response body");
+            return;
+        } finally {
+            responseBody.close();
+        }
+
+        try {
+            Gson gson = new Gson();
+            onSuccess(response.code(), (T) gson.fromJson(responseBodyStr, getType()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogUtils.e("onResponse fail parse gson, body=" + responseBodyStr);
+            onFailure(response.code(), "fail parse gson, body=" + responseBodyStr);
+        }
     }
 
     public abstract void onSuccess(int statusCode, T response);
