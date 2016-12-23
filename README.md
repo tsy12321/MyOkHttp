@@ -21,7 +21,7 @@
 ### 在app目录下的build.gradle中添加依赖
 
 ```gradle
-    compile 'com.tsy:myokhttp:1.1.0'
+    compile 'com.tsy:myokhttp:1.1.1'
 ```
 
 ## 1 总体简介

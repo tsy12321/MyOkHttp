@@ -2,6 +2,7 @@ package com.tsy.sdk.myokhttp.response;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
+import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.util.LogUtils;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public abstract class GsonResponseHandler<T> implements IResponseHandler {
     }
 
     @Override
-    public final void onSuccess(Response response) {
+    public final void onSuccess(final Response response) {
         ResponseBody responseBody = response.body();
         String responseBodyStr = "";
 
@@ -42,19 +43,37 @@ public abstract class GsonResponseHandler<T> implements IResponseHandler {
         } catch (IOException e) {
             e.printStackTrace();
             LogUtils.e("onResponse fail read response body");
-            onFailure(response.code(), "fail read response body");
+            MyOkHttp.mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    onFailure(response.code(), "fail read response body");
+                }
+            });
             return;
         } finally {
             responseBody.close();
         }
 
+        final String finalResponseBodyStr = responseBodyStr;
+
         try {
-            Gson gson = new Gson();
-            onSuccess(response.code(), (T) gson.fromJson(responseBodyStr, getType()));
+            MyOkHttp.mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Gson gson = new Gson();
+                    onSuccess(response.code(), (T) gson.fromJson(finalResponseBodyStr, getType()));
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtils.e("onResponse fail parse gson, body=" + responseBodyStr);
-            onFailure(response.code(), "fail parse gson, body=" + responseBodyStr);
+            LogUtils.e("onResponse fail parse gson, body=" + finalResponseBodyStr);
+            MyOkHttp.mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    onFailure(response.code(), "fail parse gson, body=" + finalResponseBodyStr);
+                }
+            });
+
         }
     }
 

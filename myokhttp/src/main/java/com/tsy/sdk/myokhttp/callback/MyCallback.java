@@ -1,8 +1,6 @@
 package com.tsy.sdk.myokhttp.callback;
 
-import android.os.Handler;
-import android.os.Looper;
-
+import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.response.IResponseHandler;
 import com.tsy.sdk.myokhttp.util.LogUtils;
 
@@ -19,8 +17,6 @@ public class MyCallback implements Callback {
 
     private IResponseHandler mResponseHandler;
 
-    private static Handler mHandler = new Handler(Looper.getMainLooper());
-
     public MyCallback(IResponseHandler responseHandler) {
         mResponseHandler = responseHandler;
     }
@@ -29,7 +25,7 @@ public class MyCallback implements Callback {
     public void onFailure(Call call, final IOException e) {
         LogUtils.e("onFailure", e);
 
-        mHandler.post(new Runnable() {
+        MyOkHttp.mHandler.post(new Runnable() {
             @Override
             public void run() {
                 mResponseHandler.onFailure(0, e.toString());
@@ -38,18 +34,13 @@ public class MyCallback implements Callback {
     }
 
     @Override
-    public void onResponse(Call call, final Response response) throws IOException {
+    public void onResponse(Call call, final Response response) {
         if(response.isSuccessful()) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mResponseHandler.onSuccess(response);
-                }
-            });
+            mResponseHandler.onSuccess(response);
         } else {
             LogUtils.e("onResponse fail status=" + response.code());
 
-            mHandler.post(new Runnable() {
+            MyOkHttp.mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     mResponseHandler.onFailure(response.code(), "fail status=" + response.code());

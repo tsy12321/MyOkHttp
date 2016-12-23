@@ -1,5 +1,8 @@
 package com.tsy.sdk.myokhttp;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.tsy.sdk.myokhttp.builder.DeleteBuilder;
 import com.tsy.sdk.myokhttp.builder.DownloadBuilder;
 import com.tsy.sdk.myokhttp.builder.GetBuilder;
@@ -18,6 +21,7 @@ import okhttp3.OkHttpClient;
  */
 public class MyOkHttp {
     private static OkHttpClient mOkHttpClient;
+    public static Handler mHandler = new Handler(Looper.getMainLooper());
 
     public OkHttpClient getOkHttpClient() {
         return mOkHttpClient;

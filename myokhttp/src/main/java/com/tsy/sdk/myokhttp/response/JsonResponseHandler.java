@@ -1,5 +1,6 @@
 package com.tsy.sdk.myokhttp.response;
 
+import com.tsy.sdk.myokhttp.MyOkHttp;
 import com.tsy.sdk.myokhttp.util.LogUtils;
 
 import org.json.JSONArray;
@@ -19,7 +20,7 @@ import okhttp3.ResponseBody;
 public abstract class JsonResponseHandler implements IResponseHandler {
 
     @Override
-    public final void onSuccess(Response response) {
+    public final void onSuccess(final Response response) {
         ResponseBody responseBody = response.body();
         String responseBodyStr = "";
 
@@ -28,26 +29,54 @@ public abstract class JsonResponseHandler implements IResponseHandler {
         } catch (IOException e) {
             e.printStackTrace();
             LogUtils.e("onResponse fail read response body");
-            onFailure(response.code(), "fail read response body");
+
+            MyOkHttp.mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    onFailure(response.code(), "fail read response body");
+                }
+            });
             return;
         } finally {
             responseBody.close();
         }
 
+        final String finalResponseBodyStr = responseBodyStr;
+
         try {
-            Object result = new JSONTokener(responseBodyStr).nextValue();
+            final Object result = new JSONTokener(finalResponseBodyStr).nextValue();
             if(result instanceof JSONObject) {
-                onSuccess(response.code(), (JSONObject) result);
+                MyOkHttp.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        onSuccess(response.code(), (JSONObject) result);
+                    }
+                });
             } else if(result instanceof JSONArray) {
-                onSuccess(response.code(), (JSONArray) result);
+                MyOkHttp.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        onSuccess(response.code(), (JSONArray) result);
+                    }
+                });
             } else {
-                LogUtils.e("onResponse fail parse jsonobject, body=" + responseBodyStr);
-                onFailure(response.code(), "fail parse jsonobject, body=" + responseBodyStr);
+                LogUtils.e("onResponse fail parse jsonobject, body=" + finalResponseBodyStr);
+                MyOkHttp.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        onFailure(response.code(), "fail parse jsonobject, body=" + finalResponseBodyStr);
+                    }
+                });
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            LogUtils.e("onResponse fail parse jsonobject, body=" + responseBodyStr);
-            onFailure(response.code(), "fail parse jsonobject, body=" + responseBodyStr);
+            LogUtils.e("onResponse fail parse jsonobject, body=" + finalResponseBodyStr);
+            MyOkHttp.mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    onFailure(response.code(), "fail parse jsonobject, body=" + finalResponseBodyStr);
+                }
+            });
         }
     }
 
