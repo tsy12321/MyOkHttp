@@ -23,13 +23,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.1.0'
 
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okio:okio:1.9.0'
+    compile 'com.tsy:PersistentCookieJar:1.0.0'
 }
 
 publish {
@@ -40,5 +40,5 @@ publish {
     desc = 'This is a okhttp3 extend library'
     website = 'https://github.com/tsy12321/MyOkHttp'
 
-    //上传命令 ./gradlew clean build bintrayUpload -PbintrayUser=tangsiyuan -PbintrayKey=BINTRAY_KEY -PdryRun=false
+    //上传命令 ./gradlew clean build -x test bintrayUpload -PbintrayUser=tangsiyuan -PbintrayKey=BINTRAY_KEY -PdryRun=false
 }

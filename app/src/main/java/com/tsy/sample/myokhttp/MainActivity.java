@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_upload).setOnClickListener(this);
         findViewById(R.id.btn_download).setOnClickListener(this);
         findViewById(R.id.btn_download_mgr).setOnClickListener(this);
+        findViewById(R.id.btn_cookie).setOnClickListener(this);
 
         mMyOkhttp = MyApplication.getInstance().getMyOkHttp();
     }
@@ -85,6 +86,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn_download_mgr:
                 startActivity(new Intent(this, DownloadMgrActivity.class));
+                break;
+
+            case R.id.btn_cookie:
+                doCookie();
                 break;
         }
     }
@@ -272,6 +277,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onFailure(String error_msg) {
                         Log.d(TAG, "doDownload onFailure:" + error_msg);
+                    }
+                });
+    }
+
+    /**
+     * cookie测试
+     */
+    private void doCookie() {
+        String url = "http://192.168.2.135/myokhttp/cookie.php";
+
+        mMyOkhttp.post()
+                .url(url)
+                .tag(this)
+                .enqueue(new RawResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, String response) {
+                        Log.d(TAG, "doCookie onSuccess:" + response);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, String error_msg) {
+                        Log.d(TAG, "doCookie onFailure:" + error_msg);
                     }
                 });
     }

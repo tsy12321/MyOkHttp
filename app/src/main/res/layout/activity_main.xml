@@ -104,6 +104,16 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:text="Download Mgr"/>
+
+            <Button
+                android:id="@+id/btn_cookie"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:text="Cookie"/>
         </LinearLayout>
     </ScrollView>
 

@@ -2,7 +2,13 @@ package com.tsy.sample.myokhttp;
 
 import android.app.Application;
 
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.tsy.sdk.myokhttp.MyOkHttp;
+
+import okhttp3.OkHttpClient;
 
 /**
  * Created by tsy on 2016/12/6.
@@ -25,9 +31,19 @@ public class MyApplication extends Application {
 //                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
 //                .readTimeout(10000L, TimeUnit.MILLISECONDS)
 //                .build();
-//        mMyOkhttp = new MyOkHttp(okHttpClient);
+//        mMyOkHttp = new MyOkHttp(okHttpClient);
 
-        mMyOkHttp = new MyOkHttp();
+
+        //设置开启cookie
+        ClearableCookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .cookieJar(cookieJar)
+                .build();
+        mMyOkHttp = new MyOkHttp(okHttpClient);
+
+        //默认
+//        mMyOkHttp = new MyOkHttp();
 
         mDownloadMgr = (DownloadMgr) new DownloadMgr.Builder()
                 .myOkHttp(mMyOkHttp)

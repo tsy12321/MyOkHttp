@@ -7,14 +7,18 @@
 
 ## 版本更新记录
 
-[版本更新记录](https://github.com/tsy12321/MyOkHttp/releases)
+[版本更新记录](https://github.com/tsy12321/MyOkHttp/blob/master/CHANGELOG.md)
 
-## 文章推荐
+## 参考文献
 
 对于Okhttp3的封装参考了:
 
 1. [https://github.com/hongyangAndroid/okhttputils](https://github.com/hongyangAndroid/okhttputils)
 1. [https://github.com/ZhaoKaiQiang/OkHttpPlus](https://github.com/ZhaoKaiQiang/OkHttpPlus)
+
+cookie本地持久化使用了PersistentCookieJar：
+
+1. [https://github.com/franmontiel/PersistentCookieJar](https://github.com/franmontiel/PersistentCookieJar)
 
 ## 如何添加
 
@@ -42,6 +46,18 @@ OkHttpClient okHttpClient = new OkHttpClient.Builder()
                  .build();
 
 MyOkHttp mMyOkhttp = new MyOkHttp(okHttpClient);
+```
+
+设置cookie.
+
+```java
+//设置开启cookie
+ClearableCookieJar cookieJar =
+        new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        .cookieJar(cookieJar)
+        .build();
+mMyOkHttp = new MyOkHttp(okHttpClient);
 ```
 
 ### 1.1 调用方式
