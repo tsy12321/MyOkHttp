@@ -25,7 +25,7 @@ cookie本地持久化使用了PersistentCookieJar：
 ### 在app目录下的build.gradle中添加依赖
 
 ```gradle
-    compile 'com.tsy:myokhttp:1.1.1'
+    compile 'com.tsy:myokhttp:1.1.2'
 ```
 
 ## 1 总体简介
@@ -647,6 +647,33 @@ public interface DownloadTaskListener {
      */
     void onFailure(String taskId, String error_msg);
 }
+```
+
+## 5 混淆
+
+```
+#myokhttp
+-dontwarn com.tsy.sdk.myokhttp.**
+-keep class com.tsy.sdk.myokhttp.**{*;}
+
+#okhttp
+-dontwarn okhttp3.**
+-keep class okhttp3.**{*;}
+
+#okio
+-dontwarn okio.**
+-keep class okio.**{*;}
+
+#persistentcookiejar
+-dontwarn com.franmontiel.persistentcookiejar.**
+-keep class com.franmontiel.persistentcookiejar.**{*;}
+
+#gson
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+
+## 还有所有定义的实体类
 ```
 
 ## About Me

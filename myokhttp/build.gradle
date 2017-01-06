@@ -36,7 +36,7 @@ publish {
     userOrg = 'tangsiyuan'      //bintray注册的用户名
     groupId = 'com.tsy'         //compile引用时的第1部分groupId
     artifactId = 'myokhttp'     //compile引用时的第2部分项目名
-    publishVersion = '1.1.1'    //compile引用时的第3部分版本号
+    publishVersion = '1.1.2'    //compile引用时的第3部分版本号
     desc = 'This is a okhttp3 extend library'
     website = 'https://github.com/tsy12321/MyOkHttp'
 

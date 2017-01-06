@@ -283,6 +283,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * cookie测试
+     *
+     * php代码：
+     * if(empty($_COOKIE['mycookie'])) {
+     *      setcookie('mycookie','value', time()+20);
+     *      die("no cookie 'mycookie', set 'mycookie' => 'value'");
+     * }
+     * die("has cookie 'mycookie' => " . $_COOKIE['mycookie']);
+     *
      */
     private void doCookie() {
         String url = "http://192.168.2.135/myokhttp/cookie.php";
