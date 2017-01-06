@@ -14,6 +14,7 @@ import com.tsy.sdk.myokhttp.response.JsonResponseHandler;
 import com.tsy.sdk.myokhttp.response.RawResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         findViewById(R.id.btn_post).setOnClickListener(this);
+        findViewById(R.id.btn_post_json).setOnClickListener(this);
         findViewById(R.id.btn_get).setOnClickListener(this);
         findViewById(R.id.btn_put).setOnClickListener(this);
         findViewById(R.id.btn_patch).setOnClickListener(this);
@@ -58,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_post:
                 doPost();
+                break;
+
+            case R.id.btn_post_json:
+                doPostJSON();
                 break;
 
             case R.id.btn_get:
@@ -122,6 +128,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onFailure(int statusCode, String error_msg) {
                         Log.d(TAG, "doPost onFailure:" + error_msg);
+                    }
+                });
+    }
+
+    /**
+     * POST请求Json参数 + Json返回
+     */
+    private void doPostJSON() {
+        String url = "http://192.168.2.135/myokhttp/post_json.php";
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("name", "tsy");
+            jsonObject.put("age", 24);
+            jsonObject.put("type", "json");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mMyOkhttp.post()
+                .url(url)
+                .jsonParams(jsonObject.toString())          //与params不共存 以jsonParams优先
+                .tag(this)
+                .enqueue(new JsonResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, JSONObject response) {
+                        Log.d(TAG, "doPostJSON onSuccess JSONObject:" + response);
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, JSONArray response) {
+                        Log.d(TAG, "doPostJSON onSuccess JSONArray:" + response);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, String error_msg) {
+                        Log.d(TAG, "doPostJSON onFailure:" + error_msg);
                     }
                 });
     }

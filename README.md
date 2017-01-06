@@ -14,6 +14,7 @@
 对于Okhttp3的封装参考了:
 
 1. [https://github.com/hongyangAndroid/okhttputils](https://github.com/hongyangAndroid/okhttputils)
+1. [https://github.com/jeasonlzy/okhttp-OkGo](https://github.com/jeasonlzy/okhttp-OkGo)
 1. [https://github.com/ZhaoKaiQiang/OkHttpPlus](https://github.com/ZhaoKaiQiang/OkHttpPlus)
 
 cookie本地持久化使用了PersistentCookieJar：
@@ -25,7 +26,7 @@ cookie本地持久化使用了PersistentCookieJar：
 ### 在app目录下的build.gradle中添加依赖
 
 ```gradle
-    compile 'com.tsy:myokhttp:1.1.2'
+    compile 'com.tsy:myokhttp:1.1.3'
 ```
 
 ## 1 总体简介
@@ -88,6 +89,8 @@ mMyOkHttp = new MyOkHttp(okHttpClient);
 
 ### 2.1 POST请求 + Json回调示例
 
+kv参数
+
 ```java
 String url = "http://192.168.2.135/myokhttp/post.php";
 
@@ -113,6 +116,43 @@ mMyOkhttp.post()
             @Override
             public void onFailure(int statusCode, String error_msg) {
                 Log.d(TAG, "doPost onFailure:" + error_msg);
+            }
+        });
+```
+
+json参数
+
+```java
+String url = "http://192.168.2.135/myokhttp/post_json.php";
+
+JSONObject jsonObject = new JSONObject();
+
+try {
+    jsonObject.put("name", "tsy");
+    jsonObject.put("age", 24);
+    jsonObject.put("type", "json");
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+mMyOkhttp.post()
+        .url(url)
+        .jsonParams(jsonObject.toString())          //与params不共存 以jsonParams优先
+        .tag(this)
+        .enqueue(new JsonResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, JSONObject response) {
+                Log.d(TAG, "doPostJSON onSuccess JSONObject:" + response);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, JSONArray response) {
+                Log.d(TAG, "doPostJSON onSuccess JSONArray:" + response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, String error_msg) {
+                Log.d(TAG, "doPostJSON onFailure:" + error_msg);
             }
         });
 ```
