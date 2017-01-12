@@ -8,7 +8,10 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.tsy.sdk.myokhttp.MyOkHttp;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by tsy on 2016/12/6.
@@ -26,19 +29,20 @@ public class MyApplication extends Application {
 
         mInstance = this;
 
-        //自定义OkHttp
-//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-//                .readTimeout(10000L, TimeUnit.MILLISECONDS)
-//                .build();
-//        mMyOkHttp = new MyOkHttp(okHttpClient);
-
-
-        //设置开启cookie
+        //持久化存储cookie
         ClearableCookieJar cookieJar =
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
+
+        //log拦截器
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        //自定义OkHttp
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .cookieJar(cookieJar)
+                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                .cookieJar(cookieJar)       //设置开启cookie
+                .addInterceptor(logging)            //设置开启log
                 .build();
         mMyOkHttp = new MyOkHttp(okHttpClient);
 
