@@ -26,20 +26,26 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.1.0'
 
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okio:okio:1.9.0'
     compile 'com.tsy:PersistentCookieJar:1.0.0'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 publish {
     userOrg = 'tangsiyuan'      //bintray注册的用户名
     groupId = 'com.tsy'         //compile引用时的第1部分groupId
     artifactId = 'myokhttp'     //compile引用时的第2部分项目名
-    publishVersion = '1.1.3'    //compile引用时的第3部分版本号
+    publishVersion = '1.1.4'    //compile引用时的第3部分版本号
     desc = 'This is a okhttp3 extend library'
     website = 'https://github.com/tsy12321/MyOkHttp'
 
-    //上传命令 ./gradlew clean build -x test bintrayUpload -PbintrayUser=tangsiyuan -PbintrayKey=BINTRAY_KEY -PdryRun=false
+    dryRun = false
+    bintrayUser = properties.getProperty('bintrayUser');
+    bintrayKey = properties.getProperty('bintrayKey');
+    //上传命令 ./gradlew clean build bintrayUpload
 }

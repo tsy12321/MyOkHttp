@@ -264,14 +264,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * UPLOAD + Gson返回
      */
     private void doUpload() {
-        String url = "http://192.168.2.135/myokhttp/upload.php";
+        String url = "http://192.168.1.144:8080/upload.php";
 
         mMyOkhttp.upload()
                 .url(url)
                 .addParam("name", "tsy")
                 .addFile("avatar",
-                        new File(Environment.getExternalStorageDirectory()
-                                + "/ahome/sasas.jpg"))        //上传已经存在的File
+                        new File(getFilesDir()
+                                + "/local20180124083154.png"))        //上传已经存在的File
 //                .addFile("avatar2", "asdsda.png", byteContents)    //直接上传File bytes
                 .tag(this)
                 .enqueue(new GsonResponseHandler<UploadModel>() {

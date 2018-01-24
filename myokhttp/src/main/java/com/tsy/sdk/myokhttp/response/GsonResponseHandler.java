@@ -57,11 +57,12 @@ public abstract class GsonResponseHandler<T> implements IResponseHandler {
         final String finalResponseBodyStr = responseBodyStr;
 
         try {
+            Gson gson = new Gson();
+            final T gsonResponse = (T) gson.fromJson(finalResponseBodyStr, getType());
             MyOkHttp.mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Gson gson = new Gson();
-                    onSuccess(response.code(), (T) gson.fromJson(finalResponseBodyStr, getType()));
+                    onSuccess(response.code(), gsonResponse);
                 }
             });
         } catch (Exception e) {

@@ -26,7 +26,7 @@ cookie本地持久化使用了PersistentCookieJar：
 ### 在app目录下的build.gradle中添加依赖
 
 ```gradle
-    compile 'com.tsy:myokhttp:1.1.3'
+    compile 'com.tsy:myokhttp:1.1.4'
 ```
 
 ## 1 总体简介

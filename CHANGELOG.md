@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## Version 1.1.4
+
+_2018-01-24_
+
+ * 修复Gson转化失败时崩溃的bug
+ * 修复上传和HttpLoggingInterceptor同时使用时崩溃的bug
+ 
 ## Version 1.1.3
 
 _2017-01-06_
